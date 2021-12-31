@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Available Slot Page</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+<p:linkButton outcome="userSlots.xhtml" value="Back to Slots" styleClass="back"/>
+<center><h1><p:outputLabel value="#{userBean.slotCtl.slotName}"/></h1></center>
+<h:form >
+<div align="center">
+ 	<p:poll interval="1"   
+        listener="#{userBean.timer(userBean.parkingCtl.entryTime)}" update="@form" />
+	<div style="margin:20px 0px 20px 0px;">
+		<h:outputLabel value="Car no:" style="color:black;font-size:18px;"/>&nbsp;&nbsp;
+		<h:outputText id="carno" value="#{userBean.parkingCtl.carNo}" label="carno" style="color:black;font-size:18px;"/><br/>
+		<h:outputLabel value="Duration:" style="color:black;font-size:18px;"/>&nbsp;&nbsp;
+		<h:outputText id="duration" value="#{userBean.timer(userBean.parkingCtl.entryTime)}" label="duration" style="color:black;font-size:18px;"/>
+	</div>
+    	<p:commandButton action="#{userBean.availableSlot()}" process="@form" value="Available" styleClass="btn_search"/> 
+</div>
+</h:form>	
+</h:body>
+</html>

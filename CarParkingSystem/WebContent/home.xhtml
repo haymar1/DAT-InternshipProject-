@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Online Car Parking System</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>	
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+		<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+<style>
+#about { 
+ background-color: #008080;
+}
+.inner{
+	 margin: auto;
+     width: 50%;
+     padding: 10px;
+}	
+</style>
+</h:head>
+<h:body>
+
+<div>
+<h:form id="message">
+<p:growl id="growl" showDetail="true" life="2000" />
+</h:form>
+<h:form id="login">
+<a class="w3-bar-item w3-button"  href="#about">About us</a>
+<p:commandLink class="w3-bar-item w3-button w3-right " value="Log in" onclick="PF('dlg').show();"/>
+<div class="container" style="background-image: url('resources/images/bg3.jpg');">
+ <div class="center">
+ <h1>Welcome to Online Car Parking System</h1></div>
+ <div class="centerBtn">
+ <h:link class="w3-bar-item w3-button w3-purple" value="Get started" outcome="userParking"/>
+ </div>
+ 
+     
+    <p:dialog header="Login" widgetVar="dlg" resizable="false">
+        <h:panelGrid columns="2" cellpadding="5">
+        	
+            <h:outputLabel value="Username:" />
+            <p:inputText value="#{userBean.adminCtl.name}" required="true" label="username" />
+             
+            <h:outputLabel value="Password:" />
+            <p:password value="#{userBean.adminCtl.password}"  required="true" label="password" />
+            
+            <f:facet name="footer">
+                <p:commandButton action="#{userBean.validate()}" update="message" value="Login" style="float:right;"/>
+            </f:facet>
+             
+        </h:panelGrid>
+    </p:dialog>     
+</div>
+</h:form>
+</div>
+<div id="about">
+<center><h3>About us</h3></center>
+  
+  <div class="inner">
+  <p>Business:     Managing Car Parkings</p>
+  <p>Address :     Junction Square, Ward 7, Between Pyay Road and Kyun Taw Road, Kamaryut Tsp, Near Seik Pyo Yay Bus Stop, Yangon</p>
+  <p>Phone   :     +959701456888 ,  +959258889999</p>
+  <p>Email   :     junctionsquarecarparkingmgn@gmail.com</p>
+  <p>Office  :     From 9:00AM to 9:00PM</p>
+  </div>
+  
+</div>
+
+</h:body>
+</html>

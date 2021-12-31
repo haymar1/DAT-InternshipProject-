@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+	<title>Admin Slot Page</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>				
+</h:head>  
+
+<h:body>
+<h:form>
+
+<div class="nav">
+<ul>
+<li><h:commandLink value="Parking Space" action="#{userBean.adminParking()}" styleClass="active"/></li>
+<li><h:link value="Parking Report" outcome="parkingReport"/></li>
+<li><h:commandLink value="Manage Parking Space" action="#{userBean.manageParking()}"/></li>
+<li><h:link value="Change Password" outcome="changePassword"/></li>
+<li><h:commandLink value="Log out" action="#{userBean.logout()}"/></li>
+</ul>
+</div>
+</h:form>
+
+<h:form>
+<p:commandButton action="#{userBean.backAdminParking()}" value="Back to Floor" styleClass="back"/>
+</h:form>
+
+<center><h1><p:outputLabel value="#{userBean.floorCtl.floorName}"/></h1></center>
+
+<div align="center">
+       	<h:panelGrid columns="3" cellpadding="5">
+       	      <h:outputLabel value="Type" style="font-size:22px;"/>
+       	      
+       	      <h:outputLabel value="No of Slots" style="font-size:22px;"/>
+       	      
+       	      <h:outputLabel value="Color" style="font-size:22px;"/>
+       	      
+       	      <h:outputLabel value="Occupy" style="font-size:18px;"/>
+       	      
+       	      <h:outputText value="#{userBean.listOccupySlots(userBean.floorCtl.fid)}- Slots" style="font-size:18px;"/>
+              <p:button value="" style="width:75px; height:25px; background:red;" /> 
+              
+       	      <h:outputLabel value="Available" style="font-size:18px;"/>
+              <h:outputText value="#{userBean.listAvailableSlots(userBean.floorCtl.fid)}- Slots" style="font-size:20px;"/>
+              <p:button value="" style="width:75px; height:25px; background:green;" /> 
+              
+         	  <h:outputLabel value="Disable" style="font-size:18px;"/>
+       	      <h:outputText value="#{userBean.listDisableSlots(userBean.floorCtl.fid)}- Slots" style="font-size:20px;"/>
+              <p:button value="" style="width:75px; height:25px; background:grey;" /> 
+              
+              <h:outputLabel value="Total" style="font-size:18px;"/>
+       	      <h:outputText value="#{userBean.listSlots(userBean.floorCtl.fid).size()}- Slots" style="font-size:20px;"/>
+       	      
+       	</h:panelGrid>
+       
+ </div>
+ 		
+<h:form id="slotlist">
+<p:growl id="messages" showDetail="true" life="3000" />
+	 <div class="slotGp">
+       	<ui:repeat var="sl" value="#{userBean.listSlots(userBean.floorCtl.fid)}" varStatus="status">
+       	<p:commandButton value="#{sl.slotName}"  update="slotlist" action="#{userBean.showinfoSlot(sl)}" style="background: #{userBean.color(sl.state)}" styleClass="slot"/>
+   		</ui:repeat>  		 
+    </div>
+</h:form> 
+  	
+</h:body>  
+</html>  

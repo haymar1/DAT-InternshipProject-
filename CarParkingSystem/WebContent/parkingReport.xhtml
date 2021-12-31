@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Parking Report</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>			
+		
+</h:head>
+
+<h:body>
+<h:form>
+<div class="nav">
+<ul>
+<li><h:commandLink value="Parking Space" action="#{userBean.adminParking()}"/></li>
+<li><h:link value="Parking Report" outcome="parkingReport" styleClass="active"/></li>
+<li><h:commandLink value="Manage Parking Space" action="#{userBean.manageParking()}"/></li>
+<li><h:link value="Change Password" outcome="changePassword"/></li>
+<li><h:commandLink value="Log out" action="#{userBean.logout()}"/></li>
+</ul>
+</div>
+</h:form>
+
+<center><h2>Daily Report</h2></center><br/><br/>
+
+<div class="right">
+<h:form>
+    <div>
+        <div class="ui-inputgroup">
+            <p:calendar id="calendar" value="#{userBean.tempdate}" locale="de" navigator="true" pattern="yyyy-MM-dd" size="9" 
+            placeholder="Select date"  required="true"
+                             requiredMessage="Please Select Date"/> 
+             <p:commandButton value="Search" update=":parkingList" styleClass="btn_search" />        
+        </div>
+    </div>
+</h:form>
+    </div><br/><br/><br/><br/>
+ 		<h:form id="parkingList"> 
+ 		<div>
+ 			<p:outputLabel>Total no of cars: </p:outputLabel>
+            <p:inputText value="#{userBean.listParkings().size()}" readonly="true" size="9"/>        
+        </div><br/><br/>    
+<p:growl id="growl" life="3000" />
+			<p:dataTable id="tbl" var="p" value="#{userBean.listParkings()}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+				<p:column headerText="Car No">
+					<h:outputText value="#{p.carNo}" />
+				</p:column>
+				<p:column headerText="Floor Name">
+				<h:outputText value="#{p.floorName}"/>
+				</p:column>
+				<p:column headerText="Slot Name">
+				<h:outputText value="#{p.slotName}"/>
+				</p:column>
+				<p:column headerText="Entry Time">
+					<h:outputText value="#{p.entryTime}" />
+				</p:column>
+				<p:column headerText="Exit Time">
+					<h:outputText value="#{p.exitTime}"/>
+				</p:column>
+				<p:column headerText="Duration">
+					<h:outputText value="#{p.duration}" />
+				</p:column>
+			</p:dataTable>
+</h:form> 
+</h:body>
+ 
+</html>

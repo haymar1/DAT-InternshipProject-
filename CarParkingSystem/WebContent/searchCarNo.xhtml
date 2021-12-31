@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Search CarNo Page</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+<h:form>
+<div class="nav">
+<ul>
+<li><h:commandLink value="Parking Space" action="#{userBean.adminParking()}" styleClass="active"/></li>
+<li><h:link value="Parking Report" outcome="parkingReport"/></li>
+<li><h:commandLink value="Manage Parking Space" action="#{userBean.manageParking()}"/></li>
+<li><h:link value="Change Password" outcome="changePassword"/></li>
+<li><h:commandLink value="Log out" action="#{userBean.logout()}"/></li>
+</ul>
+</div>
+</h:form>
+<h:form>
+<p:commandButton action="#{userBean.adminParking()}" value="Back to Floor" styleClass="back"/>
+</h:form>
+<h:form>
+<div align="center">
+<p:poll interval="1"   
+        listener="#{userBean.timer(userBean.parkingCtl.entryTime)}" update="@form" />
+	 <h:panelGrid columns="2">
+		<h:outputLabel value="Car no:" style="font-size:20px;"/>
+		<h:outputText id="carno" value="#{userBean.parkingCtl.carNo}" label="carno"/>
+		<h:outputLabel value="Slot Name:" style="font-size:20px;" />
+		<h:outputText id="slot" value="#{userBean.parkingCtl.slotName}" label="slotname"/>
+		<h:outputLabel value="Floor Name:" style="font-size:20px;"/>
+		<h:outputText id="floor" value="#{userBean.parkingCtl.floorName}" label="floorname"/>
+		<h:outputLabel value="Duration:" style="font-size:20px;"/>
+        <h:outputText  value="#{userBean.timer(userBean.parkingCtl.entryTime)}"/>		
+	</h:panelGrid>
+</div>
+</h:form>		
+			
+</h:body>
+</html>

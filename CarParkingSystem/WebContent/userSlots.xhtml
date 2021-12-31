@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Admin Slot Page</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>
+	
+</h:head>  
+
+<h:body>
+<p:linkButton outcome="userParking.xhtml" value="Back to Floor" styleClass="back"/>
+<center><h1><p:outputLabel value="#{userBean.floorCtl.floorName}"/></h1></center>
+
+<div align="center">
+<h:panelGrid  columns="2" style="padding-top:8px;" >
+     <h:outputText value="Occupy"/> 
+       <p:button value="" style="width:100px; height:35px; background:red;" /> 
+     <h:outputText value="Available"/> 
+       <p:button value="" style="width: 100px; height:35px; background:green;"/> 
+     <h:outputText value="Disable"/> 
+       <p:button value=""  style="width: 100px; height:35px; background:grey;" />  
+ </h:panelGrid>
+ </div>
+<h:form id="slotlist">
+ 	<p:growl id="userSlots" showDetail="true" life="3000" />
+	 <div class="slotGp">
+		<h:panelGrid columns="5" cellpadding="5">
+       	<ui:repeat var="slot" value="#{userBean.listSlots(userBean.floorCtl.fid)}" varStatus="status">
+       	<p:commandButton value="#{slot.slotName}" update="slotlist" action="#{userBean.edituserSlot(slot)}" 
+       	style="background: #{userBean.color(slot.state)}" styleClass="slot"/>
+   		</ui:repeat>
+   		
+   		</h:panelGrid>  		 
+    </div>
+</h:form>   	
+</h:body>  
+</html>  

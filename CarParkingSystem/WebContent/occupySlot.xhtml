@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Occupy Slot Page</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+<p:linkButton outcome="userSlots.xhtml" value="Back to Slots" styleClass="back"/>
+<center><h2><p:outputLabel value="#{userBean.slotCtl.slotName}"/></h2></center>
+<h:form id="occupyslot">
+<div align="center">
+	<div style="margin:20px 0px 20px 0px;">
+		<h:outputLabel value="Enter car no:" style="font-size:18px;"/>&nbsp;&nbsp;
+		<p:inputText id="carno" value="#{userBean.parkingCtl.carNo}" required="true" label="carno"/> 
+	</div>     
+   		<p:commandButton action="#{userBean.occupySlot()}" process="@form" update="@form" value="Occupy" styleClass="btn_search"/> 
+</div>	
+</h:form>	
+</h:body>
+</html>

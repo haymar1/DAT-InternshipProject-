@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>	
+<title>Admin Parking Spaces</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>			
+</h:head>
+
+<h:body> 
+<h:form id="f">
+<p:growl id="adminParking" globalOnly="true" showDetail="true" life="3000" />
+<div class="nav">
+<ul>
+<li><h:link value="Parking Space" outcome="adminParking" styleClass="active"/></li>
+<li><h:link value="Parking Report" outcome="parkingReport"/></li>
+<li><h:commandLink value="Manage Parking Space" action="#{userBean.manageParking()}"/></li>
+<li><h:link value="Change Password" outcome="changePassword"/></li>
+<li><h:commandLink value="Log out" action="#{userBean.logout()}"/></li>
+</ul>
+</div>
+</h:form>
+<center><h2><p:outputLabel value="All Parking Spaces"/></h2></center>
+<div class="right">
+<h:form id="search">
+    <div>
+        <div class="ui-inputgroup">
+            <p:autoComplete value="#{userBean.parkingCtl.carNo}" completeMethod="#{userBean.listCars}" 
+            placeholder="Enter car no" size="9"/>  	
+	        <p:commandButton value="Search"  require="true" requiredMessage="Please Enter car no" update="@form f" action="#{userBean.searchCarNo()}" styleClass="btn_search" />       
+        </div>
+    </div>
+</h:form>
+    </div>
+<h:form id="floorlist" >
+	<div class="floorGp">
+       <ui:repeat var="f1" value="#{userBean.listFloors()}" varStatus="floors1">
+       <h:commandButton process="@this" value="#{f1.floorName}" styleClass="floor" action="#{userBean.viewadminFloor(f1)}" />
+       </ui:repeat> 		  	 
+   	
+    </div>
+</h:form>    
+</h:body>  
+</html>  

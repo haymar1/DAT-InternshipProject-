@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Occupy Slot Page</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+<h:form id="test">
+<h:outputLabel for="username">User Name</h:outputLabel>  
+<h:inputText id="name" value="#{userBean.floorName}"/>  
+<h:message for="name" style="color: red"/>
+<br/>  
+<h:outputLabel for="mobile">Mobile No.</h:outputLabel>  
+<h:inputText id="slotN" value="#{userBean.slotName}"/>  
+<h:message for="slotN" style="color: red"/>  
+<br/>  
+<h:commandButton value="OK" action="home.xhtml"></h:commandButton>
+</h:form>
+</h:body>
+</html>

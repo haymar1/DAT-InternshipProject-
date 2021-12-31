@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Managing Slot Page</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>
+	<h:messages globalOnly="true" />
+</h:head>
+<h:body>
+<h:form>
+<div class="nav">
+<ul>
+<li><h:commandLink value="Parking Space" action="#{userBean.adminParking()}"/></li>
+<li><h:link value="Parking Report" outcome="parkingReport"/></li>
+<li><h:commandLink value="Manage Parking Space" action="#{userBean.manageParking()}" styleClass="active"/></li>
+<li><h:link value="Change Password" outcome="changePassword"/></li>
+<li><h:commandLink value="Log out" action="#{userBean.logout()}"/></li>
+</ul>
+</div>
+</h:form>
+<h:form>
+<p:commandButton action="#{userBean.manageParking()}" value="Back to Floor" styleClass="back"/>
+</h:form>
+<center><h2><p:outputLabel value="Managing #{userBean.floorCtl.floorName}"/></h2></center>
+<h:form id="slotlist">
+<p:growl id="editSlot" showDetail="true" life="3000" />
+	<div class="slotGp">
+		    <ui:repeat var="s" value="#{userBean.listSlots(userBean.floorCtl.fid)}" varStatus="status">
+       		<p:commandButton value="#{s.slotName}" action="#{userBean.editSlot(s)}" style="background: #{userBean.disableColor(s.state)}" update="@form" styleClass="slot"/>
+   			</ui:repeat>
+    </div>
+</h:form>
+
+<div align="center">
+	<h:panelGrid columns="3" cellpadding="5">
+	<h:form id="formrenameslot">
+	 		<p:commandButton value="Rename Slot"  onclick="PF('dlgSl').show();" styleClass="button"/>
+ 	 		<p:growl id="growl1" showDetail="true" life="3000" />
+ 	 		<p:dialog header="Rename Slot" widgetVar="dlgSl" resizable="false" styleClass="dialog">
+        		<h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Select slot:" />
+            <p:selectOneMenu id="slot3" value="#{userBean.slotCtl.slotName}" style="width:100%;">
+                    <f:selectItems value="#{userBean.listSlots(userBean.floorCtl.fid)}" var="selectSlot" itemLabel="#{selectSlot.slotName}" itemValue="#{selectSlot.slotName}" />
+                    </p:selectOneMenu>
+            <h:outputLabel value="Enter new name:" />
+            		<p:inputText id="newname" value="#{userBean.newSlotName}" required="true" label="newname" size="10"/> 
+		        </h:panelGrid> &nbsp;&nbsp;&nbsp;&nbsp;
+                	<p:commandButton action="#{userBean.renameSlot(userBean.floorCtl.fid)}" icon="pi pi-check" process="@form" update="slotlist  @form formremoveslot" 
+                	value="Rename" styleClass="dlgbutton"/>          		
+			    	<p:commandButton value="Cancel" styleClass="dlgbutton" icon="pi pi-times" onclick="dlgSl.hide();" />
+        		
+    		</p:dialog>
+    	</h:form>
+	 
+    <h:form id="formaddslot">
+	 <p:commandButton value="Add Slot" onclick="PF('dlgSl1').show();" styleClass="button"/>
+ 	 <p:growl id="growl2" showDetail="true" life="3000" />
+ 	 <p:dialog header="Add Slot" widgetVar="dlgSl1" resizable="false" styleClass="dialog">
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Enter slot name:" />
+            <p:inputText id="slotname" value="#{userBean.slotCtl.slotName}" required="true" label="slotname" >
+            </p:inputText>
+        </h:panelGrid>        
+                &nbsp; &nbsp; &nbsp;
+                <p:commandButton action="#{userBean.addSlot(userBean.floorCtl.fid)}" process="@form" update="slotlist @form formremoveslot formrenameslot" value="Add" styleClass="dlgbutton"/>
+            	&nbsp; &nbsp;
+            	<p:commandButton value="Cancel" icon="pi pi-times" onclick="dlgSl1.hide();" styleClass="dlgbutton" />
+
+    </p:dialog>
+    </h:form>
+    
+    <h:form id="formremoveslot">
+     <p:commandButton value="Remove Slot" onclick="PF('dlgSl2').show();" styleClass="button"/>
+ 	 <p:growl id="growl3" showDetail="true" life="3000" />
+ 	 <p:dialog header="Remove Slot" widgetVar="dlgSl2" resizable="false" styleClass="dialog">
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Select slot name:" />
+            <p:selectOneMenu id="slots" value="#{userBean.slotCtl.slotName}" style="width:100%;">
+                    <f:selectItems value="#{userBean.listSlots(userBean.floorCtl.fid)}" var="selectSlot" itemLabel="#{selectSlot.slotName}" itemValue="#{selectSlot.slotName}" />
+            </p:selectOneMenu> 
+		</h:panelGrid>  
+		<p:commandButton action="#{userBean.removeSlot(userBean.floorCtl.fid)}" process="@form" icon="pi pi-check" 
+		update="slotlist @form formrenameslot" value="Remove" styleClass="dlgbutton"/>               		
+		<p:commandButton value="Cancel" icon="pi pi-times" onclick="dlgSl2.hide();" styleClass="dlgbutton"/> 
+        
+    </p:dialog>
+	</h:form>
+	</h:panelGrid>
+</div>
+</h:body>
+</html>

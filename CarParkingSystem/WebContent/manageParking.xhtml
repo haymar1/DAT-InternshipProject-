@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Manage Parking Spaces</title>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<h:outputStylesheet library="css" name="style.css"/>	
+</h:head>
+<h:body>
+<h:form>
+<div class="nav">
+<ul>
+<li><h:commandLink value="Parking Space" action="#{userBean.adminParking()}"/></li>
+<li><h:link value="Parking Report" outcome="parkingReport"/></li>
+<li><h:link value="Manage Parking Space" outcome="manageParking" styleClass="active"/></li>
+<li><h:link value="Change Password" outcome="changePassword"/></li>
+<li><h:commandLink value="Log out" action="#{userBean.logout()}"/></li>
+</ul>
+</div>
+</h:form>
+<center><h2><p:outputLabel value="Manage Parking Spaces"/></h2></center>
+<h:form id="floorlist" > 	
+	 <div class="floorGp" align="center">
+	   	<ui:repeat var="f" value="#{userBean.listFloors()}" varStatus="floors">
+        <h:commandButton process="@this" value="#{f.floorName}" action="#{userBean.editFloor(f)}" styleClass="floor" />
+        </ui:repeat>
+    </div>
+</h:form>   
+     
+<div align="center">
+	<h:panelGrid columns="3" cellpadding="5">
+		<h:form id="formrenamefloor">
+	 		<p:commandButton value="Rename Floor"  onclick="PF('dlgF1').show();" styleClass="button"/>
+ 	 		<p:growl id="growl3" showDetail="true" life="3000" />
+ 	 		<p:dialog header="Rename Floor" widgetVar="dlgF1" resizable="false" styleClass="dialog">
+        		<h:panelGrid columns="2" cellpadding="5">
+            		<h:outputLabel value="Select floor:" />
+            	    <p:selectOneMenu id="floors" value="#{userBean.floorName}" style="width:100%;">
+                    <f:selectItems value="#{userBean.listFloors()}" var="selectFloor" itemLabel="#{selectFloor.floorName}" itemValue="#{selectFloor.floorName}" />
+                    </p:selectOneMenu>
+            		<h:outputLabel value="Enter new name:" />
+            		<p:inputText id="newname" value="#{userBean.newFloorName}" required="true" label="newname" size="10"/>	
+                </h:panelGrid> &nbsp;&nbsp;&nbsp;&nbsp;
+                	<p:commandButton action="#{userBean.renameFloor()}" icon="pi pi-check" process="@form" update="floorlist @form formremovefloor" 
+                	value="Rename" styleClass="dlgbutton"/>          		
+			    	<p:commandButton value="Cancel" styleClass="dlgbutton" icon="pi pi-times" onclick="dlgF1.hide();" />       		
+    		</p:dialog>
+    	</h:form>
+		
+		
+	 	<h:form id="formaddfloor">
+			<p:commandButton value="Add Floor" onclick="PF('dlgF2').show();" styleClass="button"/>
+ 	 		<p:growl id="growl4" showDetail="true" life="3000" />
+ 	 		<p:dialog header="Add Floor" widgetVar="dlgF2" resizable="false" styleClass="dialog">
+        		<h:panelGrid columns="2" cellpadding="5">
+            		<h:outputLabel value="Enter floor name:" />
+            		<p:inputText id="floorname" value="#{userBean.floorCtl.floorName}" required="true" label="floorname">
+            		</p:inputText>
+            	</h:panelGrid>	
+            	&nbsp;&nbsp;&nbsp;
+                <p:commandButton action="#{userBean.addFloor()}" icon="pi pi-check" process="@form" 
+                update="floorlist formrenamefloor formremovefloor @form" value="Add" styleClass="dlgbutton"/>  
+       			&nbsp;&nbsp;
+       			<p:commandButton value="Cancel"  icon="pi pi-times" onclick="dlgF2.hide();" styleClass="dlgbutton"/>		
+    		</p:dialog>
+    	</h:form>
+		
+     <h:form id="formremovefloor">
+	 	<p:commandButton value="Remove Floor" onclick="PF('dlgF3').show();" styleClass="button"/>
+ 		<p:growl id="growl5" showDetail="true" life="3000" />
+ 	 	<p:dialog header="Remove Floor" widgetVar="dlgF3" resizable="false" styleClass="dialog">
+        	<h:panelGrid columns="2" cellpadding="5">
+            	<h:outputLabel value="Select floor name:" />
+            	<p:selectOneMenu id="floors" value="#{userBean.floorName}" style="width:100%;">
+                <f:selectItems value="#{userBean.listFloors()}" var="selectFloor" itemLabel="#{selectFloor.floorName}" itemValue="#{selectFloor.floorName}" />
+                </p:selectOneMenu>                     
+            	<p:commandButton action="#{userBean.removeFloor()}" icon="pi pi-check" process="@form" 
+            	update="floorlist @form formrenamefloor" value="Remove" styleClass="dlgbutton"/>  
+       			<p:commandButton value="Cancel"  icon="pi pi-times" onclick="dlgF3.hide();" styleClass="dlgbutton"/>
+        	</h:panelGrid>	
+    	</p:dialog>
+    </h:form>
+   </h:panelGrid>
+</div>	
+</h:body>
+</html>
